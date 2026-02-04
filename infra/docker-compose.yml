@@ -1,0 +1,47 @@
+services:
+  facta-postgres:
+    image: postgres:15
+    container_name: facta-postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - facta-net
+
+  facta-mongo:
+    image: mongo:7
+    container_name: facta-mongo
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - facta-net
+
+  facta-redis:
+    image: redis:7
+    container_name: facta-redis
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - facta-net
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+networks:
+  facta-net:
+    driver: bridge
