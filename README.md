@@ -1,17 +1,12 @@
-FACTA – AI-based Fraud Detection Platform
-
-FACTA is a research and development platform focusing on AI-powered fraud detection and AI-generated content identification.
-The system is designed with scalability, security, and long-term maintainability in mind.
-
+FACTA – AI-Powered Social Media Platform for Verified Information
+FACTA is a research and development platform that functions as a social media network leveraging artificial intelligence to facilitate the reading and sharing of accurate, secure, and trustworthy information. The system is designed with scalability, security, and long-term maintainability in mind.
 Project Goals
 
-Detect AI-generated or manipulated content
-
-Support fraud detection & warning systems
-
+Provide a social media platform for accurate information sharing
+Implement AI-powered content verification and validation
+Ensure information security and user privacy
 Build a production-ready architecture using modern technologies
-
-Ensure secure and isolated infrastructure using Docker
+Establish secure and isolated infrastructure using Docker
 
 System Architecture
 FACTA Platform
@@ -25,43 +20,32 @@ FACTA Platform
 ├── Redis           (Cache & session store)
 │
 └── Docker Compose  (Infrastructure layer)
-
 Technologies Used
 Backend
 
 Node.js + NestJS
-
 Python + FastAPI
 
 Frontend
 
 React + TypeScript
-
 HTML / CSS / JavaScript
 
 Databases
 
-PostgreSQL 15 – structured & transactional data
-
+PostgreSQL 15 – structured and transactional data
 MongoDB 7 – flexible schema / unstructured data
-
 Redis 7 – cache, session, rate limiting
 
 Infrastructure
 
 Docker
-
 Docker Compose
 
 Timezone Configuration
 
 System timezone: Asia/Ho_Chi_Minh (UTC+7)
-
-Docker containers are configured with:
-
-TZ=Asia/Ho_Chi_Minh
-
-
+Docker containers are configured with: TZ=Asia/Ho_Chi_Minh
 Backend services should internally use UTC and convert to local time at presentation layer if needed.
 
 Project Structure
@@ -74,56 +58,34 @@ facta-platform/
 │   └── .env
 ├── docs/
 └── README.md
-
 Prerequisites (Required)
-
-Before running the project, make sure you have:
-
+Before running the project, ensure you have the following installed:
 Install Docker
-
-Download Docker Desktop:
-
+Download Docker Desktop from:
 https://www.docker.com/products/docker-desktop
-
 After installation, verify:
-
-docker --version
-
+bashdocker --version
 Install Docker Compose
-
-Docker Desktop already includes Docker Compose
-
-Verify:
-
-docker compose version
-
-
-You do NOT need to install PostgreSQL, MongoDB, or Redis locally.
-
+Docker Desktop already includes Docker Compose. Verify installation:
+bashdocker compose version
+Note: You do NOT need to install PostgreSQL, MongoDB, or Redis locally.
 Environment Variables Setup
-
 Create a .env file inside the infra/ directory:
-
-# ===============================
+bash# ===============================
 # FACTA - Database Configuration
 # ===============================
 
 POSTGRES_DB=facta_core
 POSTGRES_USER=<your POSTGRES_USER>
 POSTGRES_PASSWORD=<your POSTGRES_PASSWORD>
-
-
 Security note:
 
 Do not commit .env to public repositories
-
 Change credentials for production environments
 
 Docker Compose Configuration
-
 File: infra/docker-compose.yml
-
-services:
+yamlservices:
   facta-postgres:
     image: postgres:15
     container_name: facta-postgres
@@ -170,123 +132,73 @@ volumes:
 networks:
   facta-net:
     driver: bridge
-
 How to Run the Databases
 Step 1: Open terminal
-
 Navigate to the infra/ directory:
-
-cd infra
-
+bashcd infra
 Step 2: Start services
-docker compose up -d
-
+bashdocker compose up -d
 Step 3: Verify running containers
-docker ps
-
+bashdocker ps
+```
 
 You should see:
+- facta-postgres
+- facta-mongo
+- facta-redis
 
-facta-postgres
+## Database Connection Details
 
-facta-mongo
+### PostgreSQL
+- Host: localhost
+- Port: 5432
+- Database: facta_core
+- Username: facta_admin
+- Password: from .env
 
-facta-redis
+Recommended tools: DBeaver, pgAdmin
 
-Database Connection Details
-PostgreSQL
-
-Host: localhost
-
-Port: 5432
-
-Database: facta_core
-
-Username: facta_admin
-
-Password: from .env
-
-Recommended tools:
-
-DBeaver
-
-pgAdmin
-
-MongoDB
-
+### MongoDB
 Connection URI:
-
+```
 mongodb://localhost:27017
-
-
-Recommended tool:
-
-MongoDB Compass
-
+Recommended tool: MongoDB Compass
 Redis
 
 Host: localhost
-
 Port: 6379
 
-Recommended tools:
-
-Redis Insight
-
-redis-cli
-
+Recommended tools: Redis Insight, redis-cli
 Do I Need to Install Databases Locally?
-
-No.
-
-✔ Docker already contains:
+No. Docker containers already include:
 
 PostgreSQL
-
 MongoDB
-
 Redis
 
-✔ Your host machine only needs:
+Your host machine only needs:
 
 Docker
-
 Docker Compose
 
 Check Timezone Inside Containers
-
 Example (PostgreSQL container):
-
-docker exec -it facta-postgres date
-
-
-Expected output:
-
-Asia/Ho_Chi_Minh
-
+bashdocker exec -it facta-postgres date
+Expected output: Asia/Ho_Chi_Minh
 Security Best Practices
 
 Databases are bound to 127.0.0.1 only
-
 Containers run inside an isolated Docker network
-
 No direct public exposure
-
 Credentials managed via environment variables
 
 Future Improvements
 
-Authentication & authorization (RBAC)
-
-AI model integration (deepfake detection)
-
+Authentication and authorization (RBAC)
+AI model integration for content verification
 Audit logging
-
 Horizontal scaling
-
 CI/CD pipeline
 
 License
-
-This project is intended for educational and research purposes.
-It can be extended into a production system in the future.
+This project is intended for educational and research purposes. It can be extended into a production system in the future.
